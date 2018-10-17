@@ -36,7 +36,7 @@ pdtcal = parsedatetime.Calendar()
 
 @app.route('/')
 def index():
-    if any(r['testing'] for r in app.config['COMMIE_ROOTS'].values()):
+    if any(r.get('testing') for r in app.config['COMMIE_ROOTS'].values()):
         return render_template('html/index.html')
     else:
         abort(403)
