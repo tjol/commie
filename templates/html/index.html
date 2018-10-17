@@ -1,0 +1,56 @@
+{% extends "html/base.html" %}
+{% block title %}This is commie!{% endblock %}
+{% block content %}
+    <h1>Test comment submission</h1>
+    <p>This form is meant for testing</p>
+{% for (root, root_info) in config.COMMIE_ROOTS.items() %}
+{% if root_info.testing %}
+    <h2>{{root}}</h2>
+    <form method="POST" action="{{ request.script_root }}/submit">
+        <input type="hidden" name="root" value="{{ root }}">
+        <table>
+        <tr>
+        <td><label for="email">Email: </label></td>
+        <td><input type="text" name="email"></td>
+        </tr>
+        {% for (tp, fields) in root_info['required fields'].items() %}
+        {% for field in fields %}
+            <tr>
+            <td><label for="{{ field }}">{{field}}: </label></td>
+            {% if tp == 'textarea' %}
+                <td><textarea cols="40" rows="8" name="{{field}}"></textarea></td>
+            {% else %}
+                <td><input name="{{field}}" type="text"></td>
+            {% endif %}
+            {% if tp == 'hidden' %}
+                <td><i>(hidden)</i></td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+        {% endfor %}
+
+        {% for (tp, fields) in root_info['optional fields'].items() %}
+        {% for field in fields %}
+            <tr>
+            <td><label for="{{ field }}">{{field}}: </label></td>
+            {% if tp == 'textarea' %}
+                <td><textarea cols="40" rows="8" name="{{field}}"></textarea></td>
+            {% else %}
+                <td><input name="{{field}}" type="text"></td>
+            {% endif %}
+            {% if tp == 'hidden' %}
+                <td><i>(hidden, optional)</i></td>
+            {% else %}
+                <td><i>(optional)</i></td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+        {% endfor %}
+
+
+        <tr><td></td><td><input type="submit" value="Submit"></td></tr>
+    </table>
+    </form>
+{% endif %}
+{% endfor %}
+{% endblock %}

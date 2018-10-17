@@ -1,0 +1,6 @@
+__pycache__
+*.py[co]
+/commie.yaml
+/data
+/*.git
+/test_checkout

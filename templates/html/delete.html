@@ -1,0 +1,46 @@
+{% extends "html/base.html" %}
+{% block title %}{{ root }}{% endblock %}
+{% block content %}
+    <h1>Delete comment</h1>
+    {% if delete_message %}
+    <p><strong>{{ delete_message }}</strong></p>
+    {% else %}
+    <p> Are you sure you want to delete this comment? </p>
+    <form method="POST" action="">
+        <table>
+        {% for (tp, fields) in root_cfg['required fields'].items() %}
+            {% if tp != "hidden" %}
+                {% for field in fields %}{% if field != "email" %}
+                    <tr>
+                    <td>{{field}}: </td>
+                    {% if tp == 'textarea' %}
+                        <td><pre>{{ submission[field]|escape }}</pre></td>
+                    {% else %}
+                        <td>{{ submission[field]|escape }}</td>
+                    {% endif %}
+                    </tr>
+                {% endif %}{% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        {% for (tp, fields) in root_cfg['optional fields'].items() %}
+            {% if tp != "hidden" %}
+                {% for field in fields %}{% if field != "email" %}
+                    <tr>
+                    <td>{{field}}: </td>
+                    {% if tp == 'textarea' %}
+                        <td><pre>{{ submission[field]|escape }}</pre></td>
+                    {% else %}
+                        <td>{{ submission[field]|escape }}</td>
+                    {% endif %}
+                    </tr>
+                {% endif %}{% endfor %}
+            {% endif %}
+        {% endfor %}
+
+
+        <tr><td></td><td><input type="submit" value="Delete"></td></tr>
+        <input type="hidden" name="really-delete" value="YES">
+    </form>
+    {% endif %}
+{% endblock %}

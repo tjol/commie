@@ -1,0 +1,44 @@
+{% extends "html/base.html" %}
+{% block title %}{{ root }}{% endblock %}
+{% block content %}
+    <h1>Edit comment</h1>
+    {% if status_message %}
+    <p><strong>{{ status_message }}</strong></p>
+    {% endif %}
+    <form method="POST" action="">
+        <table>
+        {% for (tp, fields) in root_cfg['required fields'].items() %}
+            {% if tp != "hidden" %}
+                {% for field in fields %}{% if field != "email" %}
+                    <tr>
+                    <td><label for="{{ field }}">{{field}}: </label></td>
+                    {% if tp == 'textarea' %}
+                        <td><textarea cols="40" rows="8" name="{{field}}">{{ submission[field]|escape }}</textarea></td>
+                    {% else %}
+                        <td><input name="{{field}}" type="text" value="{{ submission[field]|escape }}"></td>
+                    {% endif %}
+                    </tr>
+                {% endif %}{% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        {% for (tp, fields) in root_cfg['optional fields'].items() %}
+            {% if tp != "hidden" %}
+                {% for field in fields %}
+                    <tr>
+                    <td><label for="{{ field }}">{{field}}: </label></td>
+                    {% if tp == 'textarea' %}
+                        <td><textarea cols="40" rows="8" name="{{field}}">{{ submission[field]|escape }}</textarea></td>
+                    {% else %}
+                        <td><input name="{{field}}" type="text" value="{{ submission[field]|escape }}"></td>
+                    {% endif %}
+                        <td><i>(optional)</i></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+
+        <tr><td></td><td><input type="submit" value="Save"></td></tr>
+    </form>
+{% endblock %}

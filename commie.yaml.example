@@ -1,0 +1,46 @@
+site-name:
+  # testing: true
+  working directory: /path/to/data/dir
+  pipeline:
+    - verify email
+    - push to git
+    - notify admin
+  author's rights:
+    - edit
+    - delete
+  author's rights expire: 48 hours
+  # after 2 weeks, the comment will be deleted from the working directory.
+  # if it has been verified and pushed to git by then, it will of course stay
+  # published.
+  expires: 2 weeks
+  # don't require email verification from users that appear to have recently
+  # been verified
+  session expires: 1 week
+  # how do I publish?
+  git repo: /path/to/repo.git # can be remote
+  git branch: master
+  git check exists: content/*/{slug}.* # optional
+  git target location: comments/{slug}/{id}.md
+  template: templates/comment.md
+  # E-mail settings
+  smtp server: 127.0.0.1
+  # smtp user: ...
+  # smtp password: ...
+  admin email: webmaster@example.com
+  from email: comment-bot@example.com
+  timezone: Europe/Amsterdam
+  # Content settings
+  required fields:
+    hidden:
+      - slug
+    text:
+      - author
+    textarea:
+      - text
+  optional fields:
+    hidden:
+      - in_reply_to
+    text:
+      - website
+# other-site-name:
+#   ...

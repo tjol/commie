@@ -1,0 +1,29 @@
+Subject: Your comment at {{ root }}
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Hi {{ author }}
+
+Thank you for your comment at {{ root }}. {% if pre_verified
+%} It will be published shortly.{% else %}For your comment to be published,
+please follow this link:
+    {{ verification_url }}{% endif %}
+
+{% if author_rights %}Until {{rights_expire}}, you can:
+{% for right, right_url in author_rights.items() %} * {{ right }} your comment
+       {{ right_url }}
+{% endfor %}{% endif %}
+If you did not write a comment, feel free to ignore this message.
+
+Cheers,
+    {{ root }} admin
+
+
+----
+
+This was the comment you posted:
+{% for field, field_value in visible_data.items() %}
+{{ field }}:
+    {{field_value|wordwrap(width=70)|indent}}
+{% endfor %}

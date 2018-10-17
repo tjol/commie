@@ -1,0 +1,9 @@
+{% extends "html/base.html" %}
+{% block title %}{{ root }}{% endblock %}
+{% block content %}
+    {% if email_needs_verifying %}
+    <p>Please check your email at {{ email }}</p>
+    {% else %}
+    <p>Thank you for your comment. It should appear shortly.</p>
+    {% endif %}
+{% endblock %}
