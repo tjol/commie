@@ -361,8 +361,17 @@ def process_further_web(root, obj_id, cmd='process'):
     except OSError:
         # The worker process is not responding. It's probably not running.
         # Let's start it!
-        subprocess.Popen([sys.executable, '-m', 'flask', 'commie-worker'],
-              stdin=subprocess.DEVNULL)
+        python_exe = sys.executable
+        if 'uwsgi' in python_exe:
+            # this won't do.
+            if 'PYTHON' in os.environ:
+                python_exe = os.environ['PYTHON']
+        env = {}
+        env.update(os.environ)
+        env['PYTHONPATH'] = os.path.dirname(__file__)
+        env['FLASK_APP'] = 'commie'
+        subprocess.Popen([python_exe, '-m', 'flask', 'commie-worker'],
+              stdin=subprocess.DEVNULL, env=env)
         timeout = time.time() + 2 # two seconds. That's absurdly generous.
         while True:
             try:
