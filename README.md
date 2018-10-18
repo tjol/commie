@@ -3,7 +3,7 @@ commie
 
 *— comment processor for static sites —*
 
-*[see it in action!](https://tjol.eu/blog/commie.html)*)
+*[see it in action!](https://tjol.eu/blog/commie.html)*
 
 Commie is a small web application that processes comments (or other
 user-generated content) for static blogs generated  using a tool like
