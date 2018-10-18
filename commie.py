@@ -50,6 +50,10 @@ def submit():
         abort(400)
     submission = {}
     submission['email'] = request.form['email']
+    email_hash = hashlib.sha256()
+    email_hash.update(submission['email'].encode('utf-8'))
+    submission['email_hash'] = urlsafe_b64encode(email_hash.digest()).decode('ascii')
+
     for field_class, field_list in root_cfg['required fields'].items():
         for field in field_list:
             value = request.form.get(field)
