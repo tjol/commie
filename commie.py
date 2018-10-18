@@ -373,7 +373,7 @@ def process_further_web(root, obj_id, cmd='process'):
             else:
                 python_basename = 'python'+'.'.join(map(str, sys.version_info[:2]))
                 py_exe_guess = Path(sys.prefix)/'bin'/python_basename
-                if py_exe_guess.exist():
+                if py_exe_guess.exists():
                     python_exe = py_exe_guess
                 else:
                     python_exe = python_basename # hope for the best
